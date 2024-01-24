@@ -1,6 +1,6 @@
 // Variables: valores que pueden cambiar
-let name = "Pepe";
-name = "Andres";
+let firstname = "Pepe";
+firstname = "Andres";
 
 //Constantes: valores que no van a cambiar
 const lastName = "Sanchez";
@@ -9,8 +9,11 @@ const condition = true;
 
 // Podemos crear mismas variables siempre y cuando esten en diferente contexto
 if (condition) {
-  let name = "Ale";
-  console.log(name);
+  let firstname = "Ale";
+  console.log(firstname);
 }
 
-console.log("Hola mundo! " + name + " " + lastName);
+console.log("Hola mundo! " + firstname + " " + lastName);
+
+// templates String con backstics
+console.log(`Hola mundo! ${firstname} ${lastName}`);
