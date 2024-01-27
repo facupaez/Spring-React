@@ -1,11 +1,7 @@
 // import y export: importamos y exportamos funciones
 // import y export default: nos permite una sola, le podemos dar el nombre que querramos
 
-import clientLastname, {
-  invoices,
-  papper,
-  invoiceFind,
-} from "../src/data/invoices";
+import clientLastname, { invoices, papper, invoiceFind } from "./data/invoices";
 
 // map
 const invoicesDetail = invoices.map((el) => {
