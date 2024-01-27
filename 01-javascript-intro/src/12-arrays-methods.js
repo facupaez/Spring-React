@@ -97,9 +97,13 @@ console.log(invoices);
 console.log(invoicesClient);
 
 // find
-const invoiceFind = invoices.find((el) => el.detail === "Compras de papeleria");
+const invoiceByDetail = invoices.find(
+  (el) => el.detail === "Compras de papeleria"
+);
+const invoiceById = invoices.find((el) => el.id === 1);
 
-console.log(invoiceFind);
+console.log(invoiceByDetail);
+console.log(invoiceById);
 
 // filter
 const invoiceFilter = invoices.filter((el) => el.id > 1);
