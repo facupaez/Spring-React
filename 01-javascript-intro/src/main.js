@@ -1,2 +1,14 @@
-//api fetch:
-import { invoiceById, findInvoiceById } from "../src/data/invoices";
+/*
+
+ */
+
+const httpClient = fetch("https://jsonplaceholder.typicode.com/users");
+
+/* httpClient.then((response) => {
+  response.json().then((data) => {
+    console.log(data);
+  });
+}); */
+
+// síncrono
+console.log("Síncrono");
