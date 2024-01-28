@@ -104,6 +104,23 @@ export const invoices = [
 export { papper, invoices, invoiceFind as default}; 
 */
 
-export const invoicesById = (id) => {
+export const invoiceById = (id) => {
   return invoices.find((el) => el.id === id);
+};
+
+// promises en funciones
+export const findInvoiceById = (id) => {
+  const promise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const result = invoiceById(id);
+
+      if (result) {
+        resolve(result);
+      } else {
+        reject("Error, no existe el id solicitado.");
+      }
+    }, 3000);
+  });
+
+  return promise;
 };
