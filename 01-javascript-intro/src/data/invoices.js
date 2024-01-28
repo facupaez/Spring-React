@@ -92,12 +92,12 @@ export const invoices = [
 ];
 
 // exportando funcion
-export const invoiceFind = (clientName) => {
+/* export const invoiceFind = (clientName) => {
   return invoices.find((el) => el.client.name === clientName);
-};
+}; */
 
 // export default
-export default () => invoices.map((el) => el.client.lastName);
+/* export default () => invoices.map((el) => el.client.lastName); */
 
 // otra forma de exportar y exportar como default
 /* 
