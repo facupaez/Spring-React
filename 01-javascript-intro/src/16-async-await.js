@@ -1,4 +1,10 @@
-// api DOM (document object model)
+// Async/Await
+
+/* httpClient.then((response) => {
+  response.json().then((data) => {
+    console.log(data);
+  });
+}); */
 
 const findAllUsers = async () => {
   const response = await fetch("https://jsonplaceholder.typicode.com/users");
