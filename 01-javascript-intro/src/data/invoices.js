@@ -103,3 +103,7 @@ export default () => invoices.map((el) => el.client.lastName);
 /* 
 export { papper, invoices, invoiceFind as default}; 
 */
+
+export const invoicesById = (id) => {
+  return invoices.find((el) => el.id === id);
+};
