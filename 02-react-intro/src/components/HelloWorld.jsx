@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-export const HelloWorld = ({ user, id, title = "Hola mundo!" }) => {
+export const HelloWorld = ({ user, id, title }) => {
   /*   const user = "Pepe"; */
 
   return (
@@ -17,4 +17,8 @@ HelloWorld.propTypes = {
   title: PropTypes.string.isRequired,
   user: PropTypes.object.isRequired,
   id: PropTypes.number.isRequired,
+};
+
+HelloWorld.defaultProps = {
+  title: "Hola mundo por defecto!",
 };
