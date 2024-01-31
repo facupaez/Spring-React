@@ -1,10 +1,11 @@
-export const HelloWorld = ({ user, id }) => {
+export const HelloWorld = ({ user, id, title = "Hola mundo!" }) => {
   /*   const user = "Pepe"; */
 
   return (
     <>
+      <h1>{title}</h1>
       <p>
-        Hola Mundo! {user} con el {id}
+        Soy {user.name + " " + user.lastname} con el {id}
       </p>
     </>
   );
