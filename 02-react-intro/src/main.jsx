@@ -4,6 +4,6 @@ import { HelloWorld } from "../src/components/HelloWorld";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <HelloWorld />
+    <HelloWorld user={"Juan"} id={2} />
   </React.StrictMode>
 );
