@@ -1,10 +1,24 @@
 import React from "react";
 
 const App = () => {
+  const counter = 0;
+
+  const counterSum = () => {
+    console.log("click");
+  };
+
   return (
-    <div>
+    <>
       <h1>Counter App</h1>
-    </div>
+      <h2>El valor del contador es: {counter}</h2>
+      <button
+        onClick={() => {
+          counterSum();
+        }}
+      >
+        Incrementar contador +1
+      </button>
+    </>
   );
 };
 
