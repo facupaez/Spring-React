@@ -28,6 +28,28 @@ function App() {
         <li>{companyName}</li>
         <li>{fiscalNumber}</li>
       </ul>
+
+      <h4>Detalle de productos:</h4>
+      <table>
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+          </tr>
+        </thead>
+        <tbody>
+          {items.map(({ id, product, price, quantity }) => {
+            return (
+              <tr key={id}>
+                <td>{product}</td>
+                <td>{price}</td>
+                <td>{quantity}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     </>
   );
 }
