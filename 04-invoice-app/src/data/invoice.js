@@ -13,7 +13,7 @@ export const invoice = {
   },
   company: {
     name: "New Egg",
-    fiscalNumbre: "123456",
+    fiscalNumber: "123456",
   },
   items: [
     {
