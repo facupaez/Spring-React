@@ -1,8 +1,13 @@
 import PropTypes from "prop-types";
 
 export const ClientView = ({ title, client }) => {
-  const { name: clientName, lastname, address } = client;
-  const { country, city, street, number } = address;
+  // agregando dos puntos podemos crear un alias
+  // agregando dos puntos y llaves podemos desestructurar un objeto anidado
+  const {
+    name: clientName,
+    lastname,
+    address: { country, city, street, number },
+  } = client;
 
   return (
     <>
