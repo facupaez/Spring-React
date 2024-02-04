@@ -54,6 +54,11 @@ function App() {
     setItems(invoiceData.items);
   }, []);
 
+  // hacemos cambios cada vez que se agrega un item
+  useEffect(() => {
+    setTotalInvoice(calculateTotalInvoice(items));
+  }, [items]);
+
   const handlerAddItem = ({ product, price, quantity }) => {
     // hacemos copia del array items y agregamos nuevo item
     setItems([
@@ -70,10 +75,9 @@ function App() {
     setCounter(counter + 1);
   };
 
-  // hacemos cambios cada vez que se agrega un item
-  useEffect(() => {
-    setTotalInvoice(calculateTotalInvoice(items));
-  }, [items]);
+  const handlerDeleteItem = (id) => {
+    setItems(items.filter((item) => item.id !== id));
+  };
 
   const onActiveForm = () => {
     setActiveForm(!activeForm);
@@ -97,14 +101,16 @@ function App() {
               </div>
             </div>
 
-            <ProductsView title={"Detalle de productos:"} items={items} />
+            <ProductsView
+              title={"Detalle de productos:"}
+              items={items}
+              handlerDeleteItem={handlerDeleteItem}
+            />
             <TotalView totalInvoice={totalInvoice} />
             <button className="btn btn-primary my-3" onClick={onActiveForm}>
               {!activeForm ? "Agregar item" : "Ocultar formulario"}
             </button>
-            {!activeForm || (
-              <FormView handler={(newItem) => handlerAddItem(newItem)} />
-            )}
+            {!activeForm || <FormView handlerAddItem={handlerAddItem} />}
           </div>
         </div>
       </div>

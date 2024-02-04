@@ -1,7 +1,7 @@
 import { RowItemView } from "./RowItemView";
 import PropTypes from "prop-types";
 
-export const ProductsView = ({ title, items }) => {
+export const ProductsView = ({ title, items, handlerDeleteItem }) => {
   return (
     <>
       <h4>{title}</h4>
@@ -11,6 +11,7 @@ export const ProductsView = ({ title, items }) => {
             <th>Producto</th>
             <th>Precio</th>
             <th>Cantidad</th>
+            <th>Eliminar</th>
           </tr>
         </thead>
         <tbody>
@@ -18,9 +19,11 @@ export const ProductsView = ({ title, items }) => {
             return (
               <RowItemView
                 key={id}
+                id={id}
                 product={product}
                 price={price}
                 quantity={quantity}
+                handlerDeleteItem={handlerDeleteItem}
               />
             );
           })}

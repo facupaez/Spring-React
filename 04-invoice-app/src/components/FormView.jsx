@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export const FormView = ({ handler }) => {
+export const FormView = ({ handlerAddItem }) => {
   // useState del formulario con varios states anidados para guardar sus estados
   const [formItems, setFormItems] = useState({
     product: "",
@@ -40,7 +40,7 @@ export const FormView = ({ handler }) => {
     }
 
     // enviamos props por funcion handler al padre App, donde lo recibimos en el componente de form
-    handler(formItems);
+    handlerAddItem(formItems);
 
     // resetear campos de formulario
     setFormItems({
@@ -77,8 +77,8 @@ export const FormView = ({ handler }) => {
           className="form-control m-3"
           onChange={onInputsChange}
         />
-        <button type="submit" className="btn btn-primary m-3">
-          Nuevo item
+        <button type="submit" className="btn btn-success m-3">
+          Agregar item
         </button>
       </form>
     </>
