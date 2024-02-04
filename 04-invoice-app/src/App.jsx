@@ -17,8 +17,8 @@ function App() {
   } = getInvoice();
 
   const [productValue, setProductValue] = useState("");
-  const [priceValue, setPriceValue] = useState(0);
-  const [quantityValue, setQuantityValue] = useState(0);
+  const [priceValue, setPriceValue] = useState("");
+  const [quantityValue, setQuantityValue] = useState("");
   const [items, setItems] = useState(itemsInitial);
 
   return (
@@ -49,17 +49,21 @@ function App() {
                 setItems([
                   ...items,
                   {
-                    key: 4,
+                    id: 4,
                     product: productValue,
-                    price: priceValue,
-                    quantity: quantityValue,
+                    price: parseFloat(priceValue, 10),
+                    quantity: parseInt(quantityValue, 10),
                   },
                 ]);
+                setProductValue("");
+                setPriceValue("");
+                setQuantityValue("");
               }}
             >
               <input
                 type="text"
                 name="product"
+                value={productValue}
                 placeholder="Nombre"
                 className="form-control m-3"
                 onChange={(event) => {
@@ -70,6 +74,7 @@ function App() {
               <input
                 type="text"
                 name="price"
+                value={priceValue}
                 placeholder="Precio"
                 className="form-control m-3"
                 onChange={(event) => {
@@ -80,6 +85,7 @@ function App() {
               <input
                 type="text"
                 name="quantity"
+                value={quantityValue}
                 placeholder="Cantidad"
                 className="form-control m-3"
                 onChange={(event) => {

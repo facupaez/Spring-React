@@ -5,7 +5,7 @@ export const RowItemView = ({ product, price, quantity }) => {
     <>
       <tr>
         <td>{product}</td>
-        <td>{price}</td>
+        <td>${new Intl.NumberFormat("es-AR").format(price)}</td>
         <td>{quantity}</td>
       </tr>
     </>
