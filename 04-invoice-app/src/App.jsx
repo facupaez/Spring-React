@@ -4,7 +4,7 @@ import { CompanyView } from "./components/CompanyView";
 import { InvoiceView } from "./components/InvoiceView";
 import { ProductsView } from "./components/ProductsView";
 import { TotalView } from "./components/TotalView";
-import { getInvoice } from "./services/getInvoice";
+import { calculateTotalInvoice, getInvoice } from "./services/getInvoice";
 
 const invoiceInitial = {
   id: 0,
@@ -27,12 +27,37 @@ const invoiceInitial = {
 };
 
 function App() {
-  // state para traer los datos de la factura una sola vez con useEffect mas abajo
+  // useState para traer los datos de la factura una sola vez con useEffect mas abajo
   const [invoice, setInvoice] = useState(invoiceInitial);
+
+  // desesctructuracion del objeto invoice
+  const { id, name: invoiceName, client, company } = invoice;
 
   // state para guardar y agregar nuevos items
   const [items, setItems] = useState([]);
 
+  // states para guardar datos product, price, quantity
+  /*  const [productValue, setProductValue] = useState("");
+  const [priceValue, setPriceValue] = useState("");
+  const [quantityValue, setQuantityValue] = useState(""); */
+
+  // useState del formulario con varios states anidados
+  const [formItems, setFormItems] = useState({
+    product: "",
+    price: "",
+    quantity: "",
+  });
+
+  // desestructuramos array items
+  const { product, price, quantity } = formItems;
+
+  // contador para incrementador automatico de id
+  const [counter, setCounter] = useState(4);
+
+  const [totalInvoice, setTotalInvoice] = useState(0);
+
+  // traemos una sola vez el objeto invoice
+  // traemos una sola vez el array items
   useEffect(() => {
     const invoiceData = getInvoice();
     console.log(invoiceData);
@@ -40,33 +65,12 @@ function App() {
     setItems(invoiceData.items);
   }, []);
 
-  const {
-    id,
-    name: invoiceName,
-    client,
-    company,
-    items: itemsInitial,
-    total,
-  } = invoice;
+  // hacemos cambios cada vez que se agrega un item
+  useEffect(() => {
+    setTotalInvoice(calculateTotalInvoice(items));
+  }, [items]);
 
-  // states para guardar datos product, price, quantity
-  /*  const [productValue, setProductValue] = useState("");
-  const [priceValue, setPriceValue] = useState("");
-  const [quantityValue, setQuantityValue] = useState(""); */
-
-  // useState con varios states anidados
-  const [formItems, setFormItems] = useState({
-    product: "",
-    price: "",
-    quantity: "",
-  });
-
-  // desestructuramos objeto useState
-  const { product, price, quantity } = formItems;
-
-  // contador para incrementador automatico de id
-  const [counter, setCounter] = useState(4);
-
+  // funcion para inputs del form
   const onInputsChange = ({ target: { name, value } }) => {
     //console.log(name);
     //console.log(value);
@@ -76,6 +80,7 @@ function App() {
     });
   };
 
+  // funcion para submit del form
   const onInvoiceItemSubmit = (event) => {
     event.preventDefault();
 
@@ -109,6 +114,7 @@ function App() {
     });
     setCounter(counter + 1);
   };
+
   return (
     <>
       <div className="container">
@@ -128,7 +134,7 @@ function App() {
             </div>
 
             <ProductsView title={"Detalle de productos:"} items={items} />
-            <TotalView total={total} />
+            <TotalView totalInvoice={totalInvoice} />
 
             <form className="w-50" onSubmit={onInvoiceItemSubmit}>
               <input
