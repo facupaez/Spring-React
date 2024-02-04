@@ -28,7 +28,10 @@ const invoiceInitial = {
 };
 
 function App() {
-  // useState para traer los datos de la factura una sola vez con useEffect mas abajo
+  // state para controlar la visibilidad del form
+  const [activeForm, setActiveForm] = useState(false);
+
+  // state para traer los datos de la factura una sola vez con useEffect mas abajo
   const [invoice, setInvoice] = useState(invoiceInitial);
 
   // desesctructuracion del objeto invoice
@@ -72,6 +75,10 @@ function App() {
     setTotalInvoice(calculateTotalInvoice(items));
   }, [items]);
 
+  const onActiveForm = () => {
+    setActiveForm(!activeForm);
+  };
+
   return (
     <>
       <div className="container">
@@ -92,8 +99,12 @@ function App() {
 
             <ProductsView title={"Detalle de productos:"} items={items} />
             <TotalView totalInvoice={totalInvoice} />
-
-            <FormView handler={(newItem) => handlerAddItem(newItem)} />
+            <button className="btn btn-primary my-3" onClick={onActiveForm}>
+              {!activeForm ? "Agregar item" : "Ocultar formulario"}
+            </button>
+            {!activeForm || (
+              <FormView handler={(newItem) => handlerAddItem(newItem)} />
+            )}
           </div>
         </div>
       </div>
