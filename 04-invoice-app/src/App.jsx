@@ -17,9 +17,19 @@ function App() {
   } = getInvoice();
 
   // states para guardar datos product, price, quantity
-  const [productValue, setProductValue] = useState("");
+  /*  const [productValue, setProductValue] = useState("");
   const [priceValue, setPriceValue] = useState("");
-  const [quantityValue, setQuantityValue] = useState("");
+  const [quantityValue, setQuantityValue] = useState(""); */
+
+  // useState con varios states anidados
+  const [formItems, setFormItems] = useState({
+    product: "",
+    price: "",
+    quantity: "",
+  });
+
+  // desestructuramos objeto useState
+  const { product, price, quantity } = formItems;
 
   // state para guardar y agregar nuevos items
   const [items, setItems] = useState(itemsInitial);
@@ -27,34 +37,28 @@ function App() {
   // contador para incrementador automatico de id
   const [counter, setCounter] = useState(4);
 
-  const onProductChange = ({ target }) => {
-    //console.log(target.value);
-    setProductValue(target.value);
-  };
-
-  const onPriceChange = ({ target }) => {
-    //console.log(target.value);
-    setPriceValue(target.value);
-  };
-
-  const onQuantityChange = ({ target }) => {
-    //console.log(target.value);
-    setQuantityValue(target.value);
+  const onInputsChange = ({ target: { name, value } }) => {
+    console.log(name);
+    console.log(value);
+    setFormItems({
+      ...formItems,
+      [name]: value,
+    });
   };
 
   const onInvoiceItemSubmit = (event) => {
     event.preventDefault();
 
     // validacion de campos en blanco
-    if (productValue.length <= 1) {
+    if (product.length <= 1) {
       alert("Debe llenar el campo Producto");
       return;
     }
-    if (quantityValue.trim().length < 1 || isNaN(quantityValue)) {
+    if (quantity.trim().length < 1 || isNaN(quantity)) {
       alert("Debe llenar el campo cantidad con números");
       return;
     }
-    if (priceValue.length <= 1 || isNaN(priceValue)) {
+    if (price.length <= 1 || isNaN(price)) {
       alert("Debe llenar el campo precio con números");
       return;
     }
@@ -63,14 +67,16 @@ function App() {
       ...items,
       {
         id: counter,
-        product: productValue.trim(),
-        price: parseFloat(priceValue.trim(), 10),
-        quantity: parseInt(quantityValue.trim(), 10),
+        product: product.trim(),
+        price: parseFloat(price.trim(), 10),
+        quantity: parseInt(quantity.trim(), 10),
       },
     ]);
-    setProductValue("");
-    setPriceValue("");
-    setQuantityValue("");
+    setFormItems({
+      product: "",
+      price: "",
+      quantity: "",
+    });
     setCounter(counter + 1);
   };
   return (
@@ -98,26 +104,26 @@ function App() {
               <input
                 type="text"
                 name="product"
-                value={productValue}
+                value={product}
                 placeholder="Nombre"
                 className="form-control m-3"
-                onChange={(event) => onProductChange(event)}
+                onChange={onInputsChange}
               />
               <input
                 type="text"
                 name="price"
-                value={priceValue}
+                value={price}
                 placeholder="Precio"
                 className="form-control m-3"
-                onChange={onPriceChange}
+                onChange={onInputsChange}
               />
               <input
                 type="text"
                 name="quantity"
-                value={quantityValue}
+                value={quantity}
                 placeholder="Cantidad"
                 className="form-control m-3"
-                onChange={onQuantityChange}
+                onChange={onInputsChange}
               />
               <button type="submit" className="btn btn-primary m-3">
                 Nuevo item
