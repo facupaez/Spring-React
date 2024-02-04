@@ -16,10 +16,16 @@ function App() {
     total,
   } = getInvoice();
 
+  // states para guardar datos product, price, quantity
   const [productValue, setProductValue] = useState("");
   const [priceValue, setPriceValue] = useState("");
   const [quantityValue, setQuantityValue] = useState("");
+
+  // state para guardar y agregar nuevos items
   const [items, setItems] = useState(itemsInitial);
+
+  // contador para incrementador automatico de id
+  const [counter, setCounter] = useState(4);
 
   return (
     <>
@@ -46,10 +52,16 @@ function App() {
               className="w-50"
               onSubmit={(event) => {
                 event.preventDefault();
+
+                // validacion de campos en blanco
+                if (productValue.trim().length <= 1) return;
+                if (productValue.trim().length <= 1) return;
+                if (productValue.trim().length < 1) return;
+
                 setItems([
                   ...items,
                   {
-                    id: 4,
+                    id: counter,
                     product: productValue,
                     price: parseFloat(priceValue, 10),
                     quantity: parseInt(quantityValue, 10),
@@ -58,6 +70,7 @@ function App() {
                 setProductValue("");
                 setPriceValue("");
                 setQuantityValue("");
+                setCounter(counter + 1);
               }}
             >
               <input
@@ -93,8 +106,8 @@ function App() {
                   setQuantityValue(event.target.value);
                 }}
               />
-              <button type="submit" className="btn btn-primary">
-                Crear item
+              <button type="submit" className="btn btn-primary m-3">
+                Nuevo item
               </button>
             </form>
           </div>
