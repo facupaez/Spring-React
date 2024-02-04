@@ -54,17 +54,26 @@ function App() {
                 event.preventDefault();
 
                 // validacion de campos en blanco
-                if (productValue.trim().length <= 1) return;
-                if (productValue.trim().length <= 1) return;
-                if (productValue.trim().length < 1) return;
+                if (productValue.length <= 1) {
+                  alert("Debe llenar el campo Producto");
+                  return;
+                }
+                if (priceValue.length <= 1 || isNan(priceValue)) {
+                  alert("Debe llenar el campo precio con números");
+                  return;
+                }
+                if (quantityValue.length < 1 || isNan(quantityValue)) {
+                  alert("Debe llenar el campo cantidad con números");
+                  return;
+                }
 
                 setItems([
                   ...items,
                   {
                     id: counter,
-                    product: productValue,
-                    price: parseFloat(priceValue, 10),
-                    quantity: parseInt(quantityValue, 10),
+                    product: productValue.trim(),
+                    price: parseFloat(priceValue.trim(), 10),
+                    quantity: parseInt(quantityValue.trim(), 10),
                   },
                 ]);
                 setProductValue("");
