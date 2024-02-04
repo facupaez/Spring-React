@@ -27,6 +27,52 @@ function App() {
   // contador para incrementador automatico de id
   const [counter, setCounter] = useState(4);
 
+  const onProductChange = ({ target }) => {
+    //console.log(target.value);
+    setProductValue(target.value);
+  };
+
+  const onPriceChange = ({ target }) => {
+    //console.log(target.value);
+    setPriceValue(target.value);
+  };
+
+  const onQuantityChange = ({ target }) => {
+    //console.log(target.value);
+    setQuantityValue(target.value);
+  };
+
+  const onInvoiceItemSubmit = (event) => {
+    event.preventDefault();
+
+    // validacion de campos en blanco
+    if (productValue.length <= 1) {
+      alert("Debe llenar el campo Producto");
+      return;
+    }
+    if (quantityValue.trim().length < 1 || isNaN(quantityValue)) {
+      alert("Debe llenar el campo cantidad con números");
+      return;
+    }
+    if (priceValue.length <= 1 || isNaN(priceValue)) {
+      alert("Debe llenar el campo precio con números");
+      return;
+    }
+
+    setItems([
+      ...items,
+      {
+        id: counter,
+        product: productValue.trim(),
+        price: parseFloat(priceValue.trim(), 10),
+        quantity: parseInt(quantityValue.trim(), 10),
+      },
+    ]);
+    setProductValue("");
+    setPriceValue("");
+    setQuantityValue("");
+    setCounter(counter + 1);
+  };
   return (
     <>
       <div className="container">
@@ -48,50 +94,14 @@ function App() {
             <ProductsView title={"Detalle de productos:"} items={items} />
             <TotalView total={total} />
 
-            <form
-              className="w-50"
-              onSubmit={(event) => {
-                event.preventDefault();
-
-                // validacion de campos en blanco
-                if (productValue.length <= 1) {
-                  alert("Debe llenar el campo Producto");
-                  return;
-                }
-                if (priceValue.length <= 1 || isNan(priceValue)) {
-                  alert("Debe llenar el campo precio con números");
-                  return;
-                }
-                if (quantityValue.length < 1 || isNan(quantityValue)) {
-                  alert("Debe llenar el campo cantidad con números");
-                  return;
-                }
-
-                setItems([
-                  ...items,
-                  {
-                    id: counter,
-                    product: productValue.trim(),
-                    price: parseFloat(priceValue.trim(), 10),
-                    quantity: parseInt(quantityValue.trim(), 10),
-                  },
-                ]);
-                setProductValue("");
-                setPriceValue("");
-                setQuantityValue("");
-                setCounter(counter + 1);
-              }}
-            >
+            <form className="w-50" onSubmit={onInvoiceItemSubmit}>
               <input
                 type="text"
                 name="product"
                 value={productValue}
                 placeholder="Nombre"
                 className="form-control m-3"
-                onChange={(event) => {
-                  console.log(event.target.value);
-                  setProductValue(event.target.value);
-                }}
+                onChange={(event) => onProductChange(event)}
               />
               <input
                 type="text"
@@ -99,10 +109,7 @@ function App() {
                 value={priceValue}
                 placeholder="Precio"
                 className="form-control m-3"
-                onChange={(event) => {
-                  console.log(event.target.value);
-                  setPriceValue(event.target.value);
-                }}
+                onChange={onPriceChange}
               />
               <input
                 type="text"
@@ -110,10 +117,7 @@ function App() {
                 value={quantityValue}
                 placeholder="Cantidad"
                 className="form-control m-3"
-                onChange={(event) => {
-                  console.log(event.target.value);
-                  setQuantityValue(event.target.value);
-                }}
+                onChange={onQuantityChange}
               />
               <button type="submit" className="btn btn-primary m-3">
                 Nuevo item
