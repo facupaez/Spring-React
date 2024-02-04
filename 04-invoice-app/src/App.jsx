@@ -28,6 +28,30 @@ function App() {
 
             <ProductsView title={"Detalle de productos:"} items={items} />
             <TotalView total={total} />
+
+            <form>
+              <input
+                type="text"
+                name="product"
+                placeholder="Nombre"
+                className="form-control m-3"
+                onChange={(event) => console.log(event.target.value)}
+              />
+              <input
+                type="text"
+                name="price"
+                placeholder="Precio"
+                className="form-control m-3"
+                onChange={(event) => console.log(event.target.value)}
+              />
+              <input
+                type="text"
+                name="quantity"
+                placeholder="Cantidad"
+                className="form-control m-3"
+                onChange={(event) => console.log(event.target.value)}
+              />
+            </form>
           </div>
         </div>
       </div>
