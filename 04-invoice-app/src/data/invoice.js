@@ -19,19 +19,19 @@ export const invoice = {
     {
       id: 1,
       product: "CPU Intel i7",
-      price: 499,
+      price: 500.0,
       quantity: 1,
     },
     {
       id: 2,
       product: "Teclado mecanico Corsair",
-      price: 99,
+      price: 100.0,
       quantity: 3,
     },
     {
       id: 3,
       product: "Monitor ASUS",
-      price: 199,
+      price: 200.0,
       quantity: 5,
     },
   ],
