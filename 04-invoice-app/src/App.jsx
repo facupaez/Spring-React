@@ -5,6 +5,7 @@ import { InvoiceView } from "./components/InvoiceView";
 import { ProductsView } from "./components/ProductsView";
 import { TotalView } from "./components/TotalView";
 import { calculateTotalInvoice, getInvoice } from "./services/getInvoice";
+import { FormView } from "./components/FormView";
 
 const invoiceInitial = {
   id: 0,
@@ -36,21 +37,6 @@ function App() {
   // state para guardar y agregar nuevos items
   const [items, setItems] = useState([]);
 
-  // states para guardar datos product, price, quantity
-  /*  const [productValue, setProductValue] = useState("");
-  const [priceValue, setPriceValue] = useState("");
-  const [quantityValue, setQuantityValue] = useState(""); */
-
-  // useState del formulario con varios states anidados
-  const [formItems, setFormItems] = useState({
-    product: "",
-    price: "",
-    quantity: "",
-  });
-
-  // desestructuramos array items
-  const { product, price, quantity } = formItems;
-
   // contador para incrementador automatico de id
   const [counter, setCounter] = useState(4);
 
@@ -65,39 +51,8 @@ function App() {
     setItems(invoiceData.items);
   }, []);
 
-  // hacemos cambios cada vez que se agrega un item
-  useEffect(() => {
-    setTotalInvoice(calculateTotalInvoice(items));
-  }, [items]);
-
-  // funcion para inputs del form
-  const onInputsChange = ({ target: { name, value } }) => {
-    //console.log(name);
-    //console.log(value);
-    setFormItems({
-      ...formItems,
-      [name]: value,
-    });
-  };
-
-  // funcion para submit del form
-  const onInvoiceItemSubmit = (event) => {
-    event.preventDefault();
-
-    // validacion de campos en blanco
-    if (product.length <= 1) {
-      alert("Debe llenar el campo Producto");
-      return;
-    }
-    if (quantity.trim().length < 1 || isNaN(quantity)) {
-      alert("Debe llenar el campo cantidad con números");
-      return;
-    }
-    if (price.length <= 1 || isNaN(price)) {
-      alert("Debe llenar el campo precio con números");
-      return;
-    }
-
+  const handlerAddItem = ({ product, price, quantity }) => {
+    // hacemos copia del array items y agregamos nuevo item
     setItems([
       ...items,
       {
@@ -107,13 +62,15 @@ function App() {
         quantity: parseInt(quantity.trim(), 10),
       },
     ]);
-    setFormItems({
-      product: "",
-      price: "",
-      quantity: "",
-    });
+
+    // auto incrementar id cuando enviamos form
     setCounter(counter + 1);
   };
+
+  // hacemos cambios cada vez que se agrega un item
+  useEffect(() => {
+    setTotalInvoice(calculateTotalInvoice(items));
+  }, [items]);
 
   return (
     <>
@@ -136,35 +93,7 @@ function App() {
             <ProductsView title={"Detalle de productos:"} items={items} />
             <TotalView totalInvoice={totalInvoice} />
 
-            <form className="w-50" onSubmit={onInvoiceItemSubmit}>
-              <input
-                type="text"
-                name="product"
-                value={product}
-                placeholder="Nombre"
-                className="form-control m-3"
-                onChange={onInputsChange}
-              />
-              <input
-                type="text"
-                name="price"
-                value={price}
-                placeholder="Precio"
-                className="form-control m-3"
-                onChange={onInputsChange}
-              />
-              <input
-                type="text"
-                name="quantity"
-                value={quantity}
-                placeholder="Cantidad"
-                className="form-control m-3"
-                onChange={onInputsChange}
-              />
-              <button type="submit" className="btn btn-primary m-3">
-                Nuevo item
-              </button>
-            </form>
+            <FormView handler={(newItem) => handlerAddItem(newItem)} />
           </div>
         </div>
       </div>
