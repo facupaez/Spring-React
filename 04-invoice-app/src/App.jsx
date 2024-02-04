@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ClientView } from "./components/ClientView";
 import { CompanyView } from "./components/CompanyView";
 import { InvoiceView } from "./components/InvoiceView";
@@ -6,7 +6,40 @@ import { ProductsView } from "./components/ProductsView";
 import { TotalView } from "./components/TotalView";
 import { getInvoice } from "./services/getInvoice";
 
+const invoiceInitial = {
+  id: 0,
+  name: "",
+  client: {
+    name: "",
+    lastname: "",
+    address: {
+      country: "",
+      city: "",
+      street: "",
+      number: 0,
+    },
+  },
+  company: {
+    name: "",
+    fiscalNumber: "",
+  },
+  items: [],
+};
+
 function App() {
+  // state para traer los datos de la factura una sola vez con useEffect mas abajo
+  const [invoice, setInvoice] = useState(invoiceInitial);
+
+  // state para guardar y agregar nuevos items
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    const invoiceData = getInvoice();
+    console.log(invoiceData);
+    setInvoice(invoiceData);
+    setItems(invoiceData.items);
+  }, []);
+
   const {
     id,
     name: invoiceName,
@@ -14,7 +47,7 @@ function App() {
     company,
     items: itemsInitial,
     total,
-  } = getInvoice();
+  } = invoice;
 
   // states para guardar datos product, price, quantity
   /*  const [productValue, setProductValue] = useState("");
@@ -31,15 +64,12 @@ function App() {
   // desestructuramos objeto useState
   const { product, price, quantity } = formItems;
 
-  // state para guardar y agregar nuevos items
-  const [items, setItems] = useState(itemsInitial);
-
   // contador para incrementador automatico de id
   const [counter, setCounter] = useState(4);
 
   const onInputsChange = ({ target: { name, value } }) => {
-    console.log(name);
-    console.log(value);
+    //console.log(name);
+    //console.log(value);
     setFormItems({
       ...formItems,
       [name]: value,
