@@ -6,10 +6,21 @@ const initialCartItems = [];
 
 function App() {
   const [cartItems, setCartItems] = useState(initialCartItems);
+
+  const handlerAddProductCart = (product) => {
+    setCartItems([
+      ...cartItems,
+      {
+        product: product,
+        quantity: 1,
+        total: product.price * product.quantity,
+      },
+    ]);
+  };
   return (
     <>
       <div className="container">
-        <CatalogView />
+        <CatalogView handlerAddProductCart={handlerAddProductCart} />
 
         <div className="my-4 w-50"></div>
         <CartView items={cartItems} />

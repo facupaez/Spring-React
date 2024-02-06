@@ -18,9 +18,11 @@ export const CartView = ({ items }) => {
           {items.map(({ product: { id, name, price }, quantity }) => (
             <tr key={id}>
               <td>{name}</td>
-              <td>{price}</td>
+              <td>${new Intl.NumberFormat("es-AR").format(price)}</td>
               <td>{quantity}</td>
-              <td>{price * quantity}</td>
+              <td>
+                ${new Intl.NumberFormat("es-AR").format(price * quantity)}
+              </td>
               <td>eliminar</td>
             </tr>
           ))}

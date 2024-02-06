@@ -1,4 +1,13 @@
-export const ProductCardView = ({ name, description, price }) => {
+export const ProductCardView = ({
+  id,
+  name,
+  description,
+  price,
+  handlerAddProductCart,
+}) => {
+  const onAddItem = (product) => {
+    handlerAddProductCart(product);
+  };
   return (
     <>
       <div className="card">
@@ -8,7 +17,12 @@ export const ProductCardView = ({ name, description, price }) => {
           <p className="card-text">
             ${new Intl.NumberFormat("es-AR").format(price)}
           </p>
-          <button className="btn btn-success">Agregar a carrito</button>
+          <button
+            className="btn btn-success"
+            onClick={() => onAddItem({ id, name, description, price })}
+          >
+            Agregar a carrito
+          </button>
         </div>
       </div>
     </>
