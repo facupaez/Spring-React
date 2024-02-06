@@ -1,6 +1,6 @@
 import React from "react";
 
-export const CartView = () => {
+export const CartView = ({ items }) => {
   return (
     <>
       <h3 className="text-center">Carro de compras</h3>
@@ -15,13 +15,15 @@ export const CartView = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>nombre</td>
-            <td>precio</td>
-            <td>cantidad</td>
-            <td>total</td>
-            <td>eliminar</td>
-          </tr>
+          {items.map(({ product: { id, name, price }, quantity }) => (
+            <tr key={id}>
+              <td>{name}</td>
+              <td>{price}</td>
+              <td>{quantity}</td>
+              <td>{price * quantity}</td>
+              <td>eliminar</td>
+            </tr>
+          ))}
         </tbody>
         <tfoot>
           <tr>
