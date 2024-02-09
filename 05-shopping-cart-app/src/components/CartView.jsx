@@ -1,4 +1,13 @@
+import { useState, useEffect } from "react";
+import { totalProducts } from "../services/productService";
+
 export const CartView = ({ handlerDeteleProductCart, items }) => {
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    setTotal(totalProducts(items));
+  }, [items]);
+
   const onDeleteProduct = (id) => {
     handlerDeteleProductCart(id);
   };
@@ -38,7 +47,7 @@ export const CartView = ({ handlerDeteleProductCart, items }) => {
         <tfoot>
           <tr>
             <td colSpan="5" className="fw-bold">
-              Total $123
+              ${new Intl.NumberFormat("es-AR").format(total)}
             </td>
           </tr>
         </tfoot>
