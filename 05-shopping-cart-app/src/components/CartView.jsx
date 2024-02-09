@@ -1,6 +1,7 @@
-import React from "react";
-
-export const CartView = ({ items }) => {
+export const CartView = ({ handlerDeteleProductCart, items }) => {
+  const onDeleteProduct = (id) => {
+    handlerDeteleProductCart(id);
+  };
   return (
     <>
       <h3 className="text-center">Carro de compras</h3>
@@ -23,7 +24,14 @@ export const CartView = ({ items }) => {
               <td>
                 ${new Intl.NumberFormat("es-AR").format(price * quantity)}
               </td>
-              <td>eliminar</td>
+              <td>
+                <button
+                  onClick={() => onDeleteProduct(id)}
+                  className="btn btn-danger"
+                >
+                  Eliminar
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>

@@ -39,13 +39,23 @@ function App() {
       ]);
     }
   };
+
+  const handlerDeteleProductCart = (id) => {
+    setCartItems([...cartItems.filter((item) => item.product.id !== id)]);
+  };
+
   return (
     <>
       <div className="container">
         <CatalogView handlerAddProductCart={handlerAddProductCart} />
 
+        {cartItems.length <= 0 || (
+          <CartView
+            items={cartItems}
+            handlerDeteleProductCart={handlerDeteleProductCart}
+          />
+        )}
         <div className="my-4 w-50"></div>
-        <CartView items={cartItems} />
       </div>
     </>
   );
