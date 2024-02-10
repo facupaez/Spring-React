@@ -13,7 +13,7 @@ export const CartView = ({ handlerDeteleProductCart, items }) => {
   };
   return (
     <>
-      <h3 className="text-center">Carro de compras</h3>
+      <h3 className="text-center">Cart App - Carro de compras</h3>
       <table className="table table-striped table-hover">
         <thead>
           <tr>
