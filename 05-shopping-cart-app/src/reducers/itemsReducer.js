@@ -16,7 +16,7 @@ export const itemsReducer = (state = [], action) => {
         return item;
       });
     case "deleteProductCart":
-      return [...state.filter((item) => item.product.id !== action.payload.id)];
+      return [...state.filter((item) => item.product.id !== action.payload)];
     default:
       return state;
   }
