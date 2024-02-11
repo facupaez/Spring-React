@@ -19,10 +19,22 @@ export const UserForm = () => {
       [name]: value,
     });
   };
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    if (!username || !password || !email) {
+      alert("Debe completar todos los campos del formulario");
+      return;
+    }
+    console.log(userForm);
+
+    // guardar user form en el listado de usuarios
+    setUserForm(initialUserForm);
+  };
   return (
     <div>
       <h3>Formulario de usuarios</h3>
-      <form>
+      <form onSubmit={onSubmit}>
         <input
           type="text"
           className="form-control my-3 w-75"
