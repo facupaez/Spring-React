@@ -1,51 +1,16 @@
-import { useReducer, useState } from "react";
 import { UserForm } from "./components/UserForm";
 import { UsersList } from "./components/UsersList";
-import { usersReducer } from "./reducers/usersReducer";
+import { useUsers } from "./hooks/useUsers";
 
-const initialUsers = [
-  {
-    id: 1,
-    username: "rey",
-    password: "1234",
-    email: "rey@correo.com",
-  },
-];
-
-const initialUserForm = {
-  id: 0,
-  username: "",
-  password: "",
-  email: "",
-};
 export const App = () => {
-  const [users, dispatch] = useReducer(usersReducer, initialUsers);
-  const [userSelected, setUserSelected] = useState(initialUserForm);
-
-  const handlerAddUser = (user) => {
-    let type;
-
-    if (user.id === 0) {
-      type = "addUser";
-    } else {
-      type = "updateUser";
-    }
-    dispatch({
-      type: type,
-      payload: user,
-    });
-  };
-
-  const handlerDeleteUser = (id) => {
-    dispatch({
-      type: "deleteUser",
-      payload: id,
-    });
-  };
-
-  const handlerUserSelected = (user) => {
-    setUserSelected({ ...user });
-  };
+  const {
+    users,
+    userSelected,
+    initialUserForm,
+    handlerAddUser,
+    handlerDeleteUser,
+    handlerUserSelected,
+  } = useUsers();
 
   return (
     <div className="container my-4">
