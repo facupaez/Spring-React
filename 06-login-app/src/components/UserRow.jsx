@@ -1,16 +1,31 @@
 import React from "react";
 
-export const UserRow = ({ handlerDeleteUser, id, username, email }) => {
-  const onDeleteUser = (id) => {
-    handlerDeleteUser(id);
-  };
+export const UserRow = ({
+  handlerDeleteUser,
+  handlerUserSelected,
+  id,
+  username,
+  email,
+  password,
+}) => {
   return (
     <tr>
       <td>{id}</td>
       <td>{username}</td>
       <td>{email}</td>
       <td>
-        <button type="button" className="btn btn-primary btn-sm">
+        <button
+          type="button"
+          className="btn btn-primary btn-sm"
+          onClick={() =>
+            handlerUserSelected({
+              id,
+              username,
+              email,
+              password,
+            })
+          }
+        >
           Modificar
         </button>
       </td>
@@ -18,7 +33,7 @@ export const UserRow = ({ handlerDeleteUser, id, username, email }) => {
         <button
           type="button"
           className="btn btn-danger btn-sm"
-          onClick={() => onDeleteUser(id)}
+          onClick={() => handlerDeleteUser(id)}
         >
           Eliminar
         </button>
