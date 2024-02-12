@@ -18,12 +18,11 @@ export const UsersList = ({
           </tr>
         </thead>
         <tbody>
-          {users.map(({ id, username, email, password }) => (
+          {users.map(({ id, username, email }) => (
             <UserRow
               id={id}
               username={username}
               email={email}
-              password={password}
               key={id}
               handlerDeleteUser={handlerDeleteUser}
               handlerUserSelected={handlerUserSelected}
