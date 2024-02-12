@@ -1,6 +1,9 @@
 import React from "react";
 
-export const UserRow = ({ id, username, email }) => {
+export const UserRow = ({ handlerDeleteUser, id, username, email }) => {
+  const onDeleteUser = (id) => {
+    handlerDeleteUser(id);
+  };
   return (
     <tr>
       <td>{id}</td>
@@ -12,7 +15,11 @@ export const UserRow = ({ id, username, email }) => {
         </button>
       </td>
       <td>
-        <button type="button" className="btn btn-danger btn-sm">
+        <button
+          type="button"
+          className="btn btn-danger btn-sm"
+          onClick={() => onDeleteUser(id)}
+        >
           Eliminar
         </button>
       </td>

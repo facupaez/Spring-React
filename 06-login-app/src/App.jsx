@@ -21,6 +21,15 @@ export const App = () => {
       payload: user,
     });
   };
+
+  const handlerDeleteUser = (id) => {
+    console.log(id);
+    dispatch({
+      type: "deleteUser",
+      payload: id,
+    });
+  };
+
   return (
     <div className="container my-4">
       <h1 className="text-center">Login App</h1>
@@ -29,7 +38,7 @@ export const App = () => {
           <UserForm handlerAddUser={handlerAddUser} />
         </div>
         <div className="col">
-          <UsersList users={users} />
+          <UsersList users={users} handlerDeleteUser={handlerDeleteUser} />
         </div>
       </div>
     </div>

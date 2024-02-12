@@ -8,9 +8,9 @@ export const usersReducer = (state = [], action) => {
           id: new Date().getTime(),
         },
       ];
-    case "addUser":
-      break;
-    case "addUser":
+    case "deleteUser":
+      return state.filter((user) => user.id !== action.payload);
+    case "":
       break;
 
     default:
