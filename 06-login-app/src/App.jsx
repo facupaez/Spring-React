@@ -12,6 +12,11 @@ const initialUsers = [
   },
 ];
 
+const initialUserForm = {
+  username: "",
+  password: "",
+  email: "",
+};
 export const App = () => {
   const [users, dispatch] = useReducer(usersReducer, initialUsers);
 
@@ -23,7 +28,6 @@ export const App = () => {
   };
 
   const handlerDeleteUser = (id) => {
-    console.log(id);
     dispatch({
       type: "deleteUser",
       payload: id,
@@ -35,10 +39,22 @@ export const App = () => {
       <h1 className="text-center">Login App</h1>
       <div className="row">
         <div className="col">
-          <UserForm handlerAddUser={handlerAddUser} />
+          <UserForm
+            handlerAddUser={handlerAddUser}
+            initialUserForm={initialUserForm}
+          />
         </div>
         <div className="col">
-          <UsersList users={users} handlerDeleteUser={handlerDeleteUser} />
+          <h3>Lista de usuarios</h3>
+          {users.length === 0 ? (
+            <div>
+              <p className="alert alert-warning text-center">
+                No hay usuarios en el sistema
+              </p>
+            </div>
+          ) : (
+            <UsersList users={users} handlerDeleteUser={handlerDeleteUser} />
+          )}
         </div>
       </div>
     </div>

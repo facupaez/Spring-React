@@ -3,7 +3,6 @@ import { UserRow } from "./UserRow";
 export const UsersList = ({ handlerDeleteUser, users = [] }) => {
   return (
     <div>
-      <h3>Lista de usuarios</h3>
       <table className="table table-hover table-strippedd">
         <thead>
           <tr>
