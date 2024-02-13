@@ -3,7 +3,7 @@ import { LoginPage } from "./auth/pages/LoginPage";
 import { UsersPage } from "./pages/UsersPage";
 import { loginReducer } from "./reducers/loginReducer";
 
-const initialLogin = {
+const initialLogin = JSON.parse(sessionStorage.getItem("login")) || {
   isAuth: false,
   user: undefined,
 };
@@ -18,6 +18,13 @@ export const App = () => {
         type: "login",
         payload: user,
       });
+      sessionStorage.setItem(
+        "login",
+        JSON.stringify({
+          isAuth: true,
+          user: user,
+        })
+      );
     } else {
       Swal.fire({
         title: "Error al validar usuario",
