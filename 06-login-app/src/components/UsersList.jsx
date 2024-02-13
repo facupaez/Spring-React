@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { UserRow } from "./UserRow";
 
 export const UsersList = ({
@@ -5,6 +6,10 @@ export const UsersList = ({
   handlerUserSelected,
   users = [],
 }) => {
+  useEffect(() => {
+    sessionStorage.setItem("userList", JSON.stringify(users));
+  }, [users]);
+
   return (
     <div>
       <table className="table table-hover table-strippedd">

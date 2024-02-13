@@ -2,14 +2,7 @@ import { useReducer, useState } from "react";
 import { usersReducer } from "../reducers/usersReducer";
 import Swal from "sweetalert2";
 
-const initialUsers = [
-  {
-    id: 1,
-    username: "rey",
-    password: "1234",
-    email: "rey@correo.com",
-  },
-];
+const initialUsers = JSON.parse(sessionStorage.getItem("userList")) || [];
 
 const initialUserForm = {
   id: 0,
