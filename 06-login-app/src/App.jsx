@@ -2,6 +2,7 @@ import { useReducer } from "react";
 import { LoginPage } from "./auth/pages/LoginPage";
 import { UsersPage } from "./pages/UsersPage";
 import { loginReducer } from "./reducers/loginReducer";
+import { UserNavbar } from "./components/layout/UserNavbar";
 
 const initialLogin = JSON.parse(sessionStorage.getItem("login")) || {
   isAuth: false,
@@ -33,9 +34,23 @@ export const App = () => {
       });
     }
   };
+
+  const handlerLogout = () => {
+    dispatch({
+      type: "logout",
+    });
+    sessionStorage.removeItem("login");
+  };
   return (
     <>
-      {login.isAuth ? <UsersPage /> : <LoginPage handlerLogin={handlerLogin} />}
+      {login.isAuth ? (
+        <>
+          <UserNavbar login={login} handlerLogout={handlerLogout} />
+          <UsersPage />
+        </>
+      ) : (
+        <LoginPage handlerLogin={handlerLogin} />
+      )}
     </>
   );
 };
