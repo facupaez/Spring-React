@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
-export const UserForm = ({ handlerAddUser, initialUserForm, userSelected }) => {
+export const UserForm = ({
+  handlerCloseForm,
+  handlerAddUser,
+  initialUserForm,
+  userSelected,
+}) => {
   const [userForm, setUserForm] = useState(initialUserForm);
-
   const { id, username, password, email } = userForm;
 
   useEffect(() => {
@@ -31,6 +35,11 @@ export const UserForm = ({ handlerAddUser, initialUserForm, userSelected }) => {
 
     // guardar user form en el listado de usuarios
     handlerAddUser(userForm);
+    setUserForm(initialUserForm);
+  };
+
+  const onCloseForm = () => {
+    handlerCloseForm();
     setUserForm(initialUserForm);
   };
   return (
@@ -67,6 +76,13 @@ export const UserForm = ({ handlerAddUser, initialUserForm, userSelected }) => {
         <input type="hidden" name="id" value={id} />
         <button className="btn btn-success" type="submit">
           {id > 0 ? "Modificar usuario" : "Crear usuario"}
+        </button>
+        <button
+          className="btn btn-danger mx-2"
+          type="button"
+          onClick={() => onCloseForm()}
+        >
+          Cerrar
         </button>
       </form>
     </div>
