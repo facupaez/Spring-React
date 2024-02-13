@@ -19,7 +19,10 @@ export const UserNavbar = ({ login, handlerLogout }) => {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
+        <div
+          className="collapse navbar-collapse justify-content-start"
+          id="navbarNavUsers"
+        >
           <ul className="navbar-nav">
             <li className="nav-item">
               <NavLink className="nav-link" to={"/users"}>
@@ -29,8 +32,20 @@ export const UserNavbar = ({ login, handlerLogout }) => {
           </ul>
         </div>
         <div
+          className="collapse navbar-collapse justify-content-start"
+          id="navbarNavRegister"
+        >
+          <ul className="navbar-nav">
+            <li className="nav-item">
+              <NavLink className="nav-link" to={"/users"}>
+                Registrar
+              </NavLink>
+            </li>
+          </ul>
+        </div>
+        <div
           className="collapse navbar-collapse justify-content-end"
-          id="navbarNav"
+          id="navbarNavLogout"
         >
           <span className="nav-item nav-link text-primary mx-3">
             Bienvenido, {login.user?.username}
