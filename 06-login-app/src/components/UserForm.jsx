@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 export const UserForm = ({ handlerAddUser, initialUserForm, userSelected }) => {
   const [userForm, setUserForm] = useState(initialUserForm);
@@ -10,7 +11,6 @@ export const UserForm = ({ handlerAddUser, initialUserForm, userSelected }) => {
   }, [userSelected]);
 
   const onInputChange = ({ target }) => {
-    //console.log(target.value);
     const { name, value } = target;
     setUserForm({
       ...userForm,
@@ -21,7 +21,11 @@ export const UserForm = ({ handlerAddUser, initialUserForm, userSelected }) => {
   const onSubmit = (event) => {
     event.preventDefault();
     if (!username || (!password && id === 0) || !email) {
-      alert("Debe completar todos los campos del formulario");
+      Swal.fire({
+        icon: "warning",
+        title: "Oops...",
+        text: "Debe completar todos los campos del formulario!",
+      });
       return;
     }
 
