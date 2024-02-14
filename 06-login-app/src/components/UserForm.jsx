@@ -44,7 +44,7 @@ export const UserForm = ({
   };
   return (
     <div>
-      <h3>Registro de usuarios</h3>
+      <h3>{id > 1 ? "Edición de usuario" : "Registro de usuario"}</h3>
       <form onSubmit={onSubmit}>
         <input
           type="text"
