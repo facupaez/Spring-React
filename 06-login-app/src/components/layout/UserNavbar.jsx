@@ -19,30 +19,21 @@ export const UserNavbar = ({ login, handlerLogout }) => {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div
-          className="collapse navbar-collapse justify-content-start"
-          id="navbarNavUsers"
-        >
+        <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item">
               <NavLink className="nav-link" to={"/users"}>
                 Usuarios
               </NavLink>
             </li>
-          </ul>
-        </div>
-        <div
-          className="collapse navbar-collapse justify-content-start"
-          id="navbarNavRegister"
-        >
-          <ul className="navbar-nav">
             <li className="nav-item">
-              <NavLink className="nav-link" to={"/users"}>
+              <NavLink className="nav-link" to={"/users/register"}>
                 Registrar
               </NavLink>
             </li>
           </ul>
         </div>
+
         <div
           className="collapse navbar-collapse justify-content-end"
           id="navbarNavLogout"

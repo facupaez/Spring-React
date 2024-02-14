@@ -44,7 +44,7 @@ export const UserForm = ({
   };
   return (
     <div>
-      <h3>Formulario de usuarios</h3>
+      <h3>Registro de usuarios</h3>
       <form onSubmit={onSubmit}>
         <input
           type="text"
@@ -77,13 +77,15 @@ export const UserForm = ({
         <button className="btn btn-success" type="submit">
           {id > 0 ? "Modificar usuario" : "Crear usuario"}
         </button>
-        <button
-          className="btn btn-danger mx-2"
-          type="button"
-          onClick={() => onCloseForm()}
-        >
-          Cerrar
-        </button>
+        {!handlerCloseForm || (
+          <button
+            className="btn btn-danger mx-2"
+            type="button"
+            onClick={() => onCloseForm()}
+          >
+            Cerrar
+          </button>
+        )}
       </form>
     </div>
   );
