@@ -33,6 +33,15 @@ export const UserForm = ({
       return;
     }
 
+    if (!email.includes("@")) {
+      Swal.fire({
+        icon: "warning",
+        title: "Oops...",
+        text: "El email debe ser válido",
+      });
+      return;
+    }
+
     // guardar user form en el listado de usuarios
     handlerAddUser(userForm);
     setUserForm(initialUserForm);
