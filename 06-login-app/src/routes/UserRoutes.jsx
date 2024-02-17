@@ -4,21 +4,11 @@ import { UsersPage } from "../pages/UsersPage";
 import { UserNavbar } from "../components/layout/UserNavbar";
 import { RegisterPage } from "../pages/RegisterPage";
 import { useUsers } from "../hooks/useUsers";
+import { UserProvider } from "../context/UserProvider";
 
 export const UserRoutes = ({ login, handlerLogout }) => {
-  const {
-    users,
-    userSelected,
-    initialUserForm,
-    visibleForm,
-    handlerAddUser,
-    handlerDeleteUser,
-    handlerUserSelected,
-    handlerOpenForm,
-    handlerCloseForm,
-  } = useUsers();
   return (
-    <>
+    <UserProvider>
       <UserNavbar login={login} handlerLogout={handlerLogout} />
       <Routes>
         <Route
@@ -58,6 +48,6 @@ export const UserRoutes = ({ login, handlerLogout }) => {
         />
         <Route path="/" element={<Navigate to={"/users"} />} />
       </Routes>
-    </>
+    </UserProvider>
   );
 };
