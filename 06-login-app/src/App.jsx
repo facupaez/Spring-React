@@ -1,10 +1,12 @@
 import { LoginPage } from "./auth/pages/LoginPage";
-import { useLogin } from "./hooks/useLogin";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { UserRoutes } from "./routes/UserRoutes";
+import { useContext } from "react";
+import { AuthContext } from "./context/AuthContext";
 
 export const App = () => {
-  const { login, handlerLogin, handlerLogout } = useLogin();
+  const { login } = useContext(AuthContext);
+
   return (
     <Routes>
       {login.isAuth ? (
