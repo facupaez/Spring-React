@@ -1,11 +1,10 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { UserRow } from "./UserRow";
+import { UserContext } from "../context/UserContext";
 
-export const UsersList = ({
-  handlerDeleteUser,
-  handlerUserSelected,
-  users = [],
-}) => {
+export const UsersList = () => {
+  const { users } = useContext(UserContext);
+
   useEffect(() => {
     sessionStorage.setItem("userList", JSON.stringify(users));
   }, [users]);
@@ -25,14 +24,7 @@ export const UsersList = ({
         </thead>
         <tbody>
           {users.map(({ id, username, email }) => (
-            <UserRow
-              id={id}
-              username={username}
-              email={email}
-              key={id}
-              handlerDeleteUser={handlerDeleteUser}
-              handlerUserSelected={handlerUserSelected}
-            />
+            <UserRow id={id} username={username} email={email} key={id} />
           ))}
         </tbody>
       </table>
