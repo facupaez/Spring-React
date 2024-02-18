@@ -1,10 +1,10 @@
-package com.example.demo;
+package com.paez.backend.cartapp;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DemoApplicationTests {
+class BackendCartappApplicationTests {
 
 	@Test
 	void contextLoads() {

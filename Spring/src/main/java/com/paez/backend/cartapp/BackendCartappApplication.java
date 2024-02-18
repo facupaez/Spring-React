@@ -1,13 +1,13 @@
-package com.example.demo;
+package com.paez.backend.cartapp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DemoApplication {
+public class BackendCartappApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
+		SpringApplication.run(BackendCartappApplication.class, args);
 	}
 
 }
