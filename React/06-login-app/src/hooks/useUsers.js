@@ -2,7 +2,7 @@ import { useReducer, useState } from "react";
 import { usersReducer } from "../reducers/usersReducer";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import { findAllUsers, saveUser } from "../services/userService";
+import { findAllUsers, saveUser, updateUser } from "../services/userService";
 
 const initialUsers = JSON.parse(sessionStorage.getItem("userList")) || [];
 
@@ -23,6 +23,8 @@ export const useUsers = () => {
 
     if (user.id === 0) {
       response = await saveUser(user);
+    } else {
+      response = await updateUser(user);
     }
 
     dispatch({
