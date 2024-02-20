@@ -2,7 +2,12 @@ import { useReducer, useState } from "react";
 import { usersReducer } from "../reducers/usersReducer";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import { findAllUsers, saveUser, updateUser } from "../services/userService";
+import {
+  deleteUser,
+  findAllUsers,
+  saveUser,
+  updateUser,
+} from "../services/userService";
 
 const initialUsers = JSON.parse(sessionStorage.getItem("userList")) || [];
 
@@ -53,6 +58,7 @@ export const useUsers = () => {
       cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
+        deleteUser(id);
         dispatch({
           type: "deleteUser",
           payload: id,
