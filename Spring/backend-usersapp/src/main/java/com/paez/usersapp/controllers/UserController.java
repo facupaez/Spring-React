@@ -3,6 +3,7 @@ package com.paez.usersapp.controllers;
 import com.paez.usersapp.entities.User;
 import com.paez.usersapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,5 +29,10 @@ public class UserController {
             return ResponseEntity.ok(userOptional.orElseThrow());
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping
+    public ResponseEntity<?> saveUser(@RequestBody User user){
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
     }
 }
