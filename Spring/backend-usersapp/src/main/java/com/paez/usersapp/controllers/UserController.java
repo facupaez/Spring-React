@@ -3,8 +3,7 @@ package com.paez.usersapp.controllers;
 import com.paez.usersapp.entities.User;
 import com.paez.usersapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,5 +33,17 @@ public class UserController {
     @PostMapping
     public ResponseEntity<?> saveUser(@RequestBody User user){
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateUser(@RequestBody User user, @PathVariable Long id){
+        Optional<User> userOptional = userService.findById(id);
+        if (userOptional.isPresent()){
+            User userDb = userOptional.orElseThrow();
+            userDb.setUsername(user.getUsername());
+            userDb.setEmail(user.getEmail());
+            return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(userDb));
+        }
+        return ResponseEntity.notFound().build();
     }
 }
