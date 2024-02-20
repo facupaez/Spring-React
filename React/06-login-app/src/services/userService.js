@@ -35,3 +35,11 @@ export const updateUser = async ({ id, username, email }) => {
 
   return undefined;
 };
+
+export const deleteUser = async ({ id }) => {
+  try {
+    await axios.delete(`${BASE_URL}/{id}`);
+  } catch (error) {
+    console.error(error);
+  }
+};
