@@ -20,6 +20,8 @@ export const usersReducer = (state = [], action) => {
         }
         return user;
       });
+    case "findAllUsers":
+      return action.payload;
     default:
       return state;
   }

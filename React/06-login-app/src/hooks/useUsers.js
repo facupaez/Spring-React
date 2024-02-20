@@ -2,6 +2,7 @@ import { useReducer, useState } from "react";
 import { usersReducer } from "../reducers/usersReducer";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { findAllUsers } from "../services/userService";
 
 const initialUsers = JSON.parse(sessionStorage.getItem("userList")) || [];
 
@@ -71,6 +72,14 @@ export const useUsers = () => {
     setUserSelected(initialUserForm);
   };
 
+  const getUsers = async () => {
+    const result = await findAllUsers();
+    dispatch({
+      type: "findAllUsers",
+      payload: result.data,
+    });
+  };
+
   return {
     users,
     userSelected,
@@ -81,5 +90,6 @@ export const useUsers = () => {
     handlerUserSelected,
     handlerOpenForm,
     handlerCloseForm,
+    getUsers,
   };
 };
