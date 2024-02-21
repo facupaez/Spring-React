@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 import { UserContext } from "../context/UserContext";
 
 export const UserForm = ({ handlerCloseForm, userSelected }) => {
-  const { initialUserForm, handlerAddUser } = useContext(UserContext);
+  const { initialUserForm, handlerAddUser, errors } = useContext(UserContext);
   const [userForm, setUserForm] = useState(initialUserForm);
   const { id, username, password, email } = userForm;
 
@@ -21,7 +21,8 @@ export const UserForm = ({ handlerCloseForm, userSelected }) => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    if (!username || (!password && id === 0) || !email) {
+    // validaciones
+    /*  if (!username || (!password && id === 0) || !email) {
       Swal.fire({
         icon: "warning",
         title: "Oops...",
@@ -37,7 +38,7 @@ export const UserForm = ({ handlerCloseForm, userSelected }) => {
         text: "El email debe ser válido",
       });
       return;
-    }
+    } */
 
     // guardar user form en el listado de usuarios
     handlerAddUser(userForm);

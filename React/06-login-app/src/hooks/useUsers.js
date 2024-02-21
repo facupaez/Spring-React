@@ -17,35 +17,50 @@ const initialUserForm = {
   password: "",
   email: "",
 };
+
+const initialErrors = {
+  username: "",
+  password: "",
+  email: "",
+};
+
 export const useUsers = () => {
   const [users, dispatch] = useReducer(usersReducer, initialUsers);
   const [userSelected, setUserSelected] = useState(initialUserForm);
   const [visibleForm, setVisibleForm] = useState(false);
+  const [errors, setErrors] = useState(initialErrors);
   const navigate = useNavigate();
 
   const handlerAddUser = async (user) => {
     let response;
+    try {
+      if (user.id === 0) {
+        response = await saveUser(user);
+      } else {
+        response = await updateUser(user);
+      }
 
-    if (user.id === 0) {
-      response = await saveUser(user);
-    } else {
-      response = await updateUser(user);
+      dispatch({
+        type: user.id === 0 ? "addUser" : "updateUser",
+        payload: response.data,
+      });
+
+      Swal.fire({
+        title:
+          user.id === 0
+            ? "Usuario creado con éxito"
+            : "Usuario actualizado con éxito",
+        icon: "success",
+      });
+      handlerCloseForm();
+      navigate("/users");
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        setErrors(error.response.data);
+      } else {
+        throw error;
+      }
     }
-
-    dispatch({
-      type: user.id === 0 ? "addUser" : "updateUser",
-      payload: response.data,
-    });
-
-    Swal.fire({
-      title:
-        user.id === 0
-          ? "Usuario creado con éxito"
-          : "Usuario actualizado con éxito",
-      icon: "success",
-    });
-    handlerCloseForm();
-    navigate("/users");
   };
 
   const handlerDeleteUser = (id) => {
@@ -99,6 +114,7 @@ export const useUsers = () => {
     userSelected,
     initialUserForm,
     visibleForm,
+    errors,
     handlerAddUser,
     handlerDeleteUser,
     handlerUserSelected,
