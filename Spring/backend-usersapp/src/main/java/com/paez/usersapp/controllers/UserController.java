@@ -2,11 +2,15 @@ package com.paez.usersapp.controllers;
 
 import com.paez.usersapp.entities.User;
 import com.paez.usersapp.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -32,12 +36,18 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<?> saveUser(@RequestBody User user){
+    public ResponseEntity<?> saveUser(@Valid @RequestBody User user, BindingResult result){
+        if (result.hasErrors()){
+            return handleValidationResult(result);
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateUser(@RequestBody User user, @PathVariable Long id){
+    public ResponseEntity<?> updateUser(@Valid @RequestBody User user, BindingResult result, @PathVariable Long id){
+        if (result.hasErrors()){
+            return handleValidationResult(result);
+        }
         Optional<User> userOptional = userService.update(user, id);
         if (userOptional.isPresent()){
             return ResponseEntity.status(HttpStatus.CREATED).body(userOptional.orElseThrow());
@@ -53,5 +63,14 @@ public class UserController {
             return ResponseEntity.noContent().build(); //status 204
         }
         return ResponseEntity.notFound().build();
+    }
+
+    private ResponseEntity<?> handleValidationResult(BindingResult result) {
+        Map<String, String> errors = new HashMap<>();
+
+        result.getFieldErrors().forEach(err -> {
+            errors.put(err.getField(), err.getDefaultMessage());
+        });
+        return ResponseEntity.badRequest().body(errors);
     }
 }
