@@ -57,6 +57,17 @@ export const useUsers = () => {
     } catch (error) {
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data);
+      } else if (
+        error.response &&
+        error.response.status === 500 &&
+        error.response.data?.message?.includes("constraint")
+      ) {
+        if (error.response.data?.message?.includes("UK_username")) {
+          setErrors({ username: "El usuario ingresado ya existe." });
+        }
+        if (error.response.data?.message?.includes("UK_email")) {
+          setErrors({ email: "El email ingresado ya existe." });
+        }
       } else {
         throw error;
       }
