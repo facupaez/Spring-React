@@ -1,5 +1,6 @@
 package com.paez.usersapp.controllers;
 
+import com.paez.usersapp.DTO.UserRequestDTO;
 import com.paez.usersapp.entities.User;
 import com.paez.usersapp.services.UserService;
 import jakarta.validation.Valid;
@@ -44,11 +45,11 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateUser(@Valid @RequestBody User user, BindingResult result, @PathVariable Long id){
+    public ResponseEntity<?> updateUser(@Valid @RequestBody UserRequestDTO userRequestDTO, BindingResult result, @PathVariable Long id){
         if (result.hasErrors()){
             return handleValidationResult(result);
         }
-        Optional<User> userOptional = userService.update(user, id);
+        Optional<User> userOptional = userService.update(userRequestDTO, id);
         if (userOptional.isPresent()){
             return ResponseEntity.status(HttpStatus.CREATED).body(userOptional.orElseThrow());
         }

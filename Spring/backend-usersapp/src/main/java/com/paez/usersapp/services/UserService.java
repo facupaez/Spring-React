@@ -1,5 +1,6 @@
 package com.paez.usersapp.services;
 
+import com.paez.usersapp.DTO.UserRequestDTO;
 import com.paez.usersapp.entities.User;
 import java.util.*;
 
@@ -11,7 +12,7 @@ public interface UserService {
 
     User save(User user);
 
-    Optional<User> update(User user, Long id);
+    Optional<User> update(UserRequestDTO userRequestDTO, Long id);
 
     void delete(Long id);
 }

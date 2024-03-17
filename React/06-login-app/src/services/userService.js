@@ -26,6 +26,7 @@ export const updateUser = async ({ id, username, email }) => {
     return await axios.put(`${BASE_URL}/${id}`, {
       username,
       email,
+      //password: "nothing", // este password NO se persiste en el backend.
     });
   } catch (error) {
     throw error;

@@ -1,5 +1,6 @@
 package com.paez.usersapp.services;
 
+import com.paez.usersapp.DTO.UserRequestDTO;
 import com.paez.usersapp.entities.User;
 import com.paez.usersapp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,12 +36,12 @@ public class UserServiceImpl implements UserService{
 
     @Override
     @Transactional
-    public Optional<User> update(User user, Long id) {
+    public Optional<User> update(UserRequestDTO userRequestDTO, Long id) {
         Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isPresent()){
             User userDb = userOptional.orElseThrow();
-            userDb.setUsername(user.getUsername());
-            userDb.setEmail(user.getEmail());
+            userDb.setUsername(userRequestDTO.getUsername());
+            userDb.setEmail(userRequestDTO.getEmail());
             return Optional.of(userRepository.save(userDb));
         }
         return Optional.empty();
