@@ -12,6 +12,9 @@ import org.springframework.security.core.*;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.io.IOException;
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -48,6 +51,23 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+
+        // si la autenticación es correcta obtenemos username
+        String username = (( org.springframework.security.core.userdetails.User) authResult.getPrincipal())
+                .getUsername();
+        // generamos token artesanal
+        String originalInput = "algun_token_con_frase_secreta." + username;
+        String token = Base64.getEncoder().encodeToString(originalInput.getBytes());
+        // creamos cabecera
+        response.addHeader("Authorization", "Bearer " + token);
+        // creamos un objeto que se convertirá a json
+        Map<String, Object> body = new HashMap<>();
+        body.put("token", token);
+        body.put("message", String.format("Hola %s, has iniciado sesión con éxito.", username));
+        body.put("username", username);
+        response.getWriter().write(new ObjectMapper().writeValueAsString(body));
+        response.setStatus(200);
+        response.setContentType("application/json");
     }
 
     @Override
