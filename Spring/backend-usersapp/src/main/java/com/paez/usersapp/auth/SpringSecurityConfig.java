@@ -1,7 +1,10 @@
 package com.paez.usersapp.auth;
 
+import com.paez.usersapp.auth.filters.JwtAuthenticationFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -9,6 +12,9 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SpringSecurityConfig {
+
+    @Autowired
+    private AuthenticationConfiguration authenticationConfiguration;
 
     // reglas para autenticación y autorización
     @Bean
@@ -20,6 +26,7 @@ public class SpringSecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/users").hasRole("ADMIN")
                         .requestMatchers("/users/**").hasRole("ADMIN")*/
                         .anyRequest().authenticated())
+                .addFilter(new JwtAuthenticationFilter(authenticationConfiguration.getAuthenticationManager()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();

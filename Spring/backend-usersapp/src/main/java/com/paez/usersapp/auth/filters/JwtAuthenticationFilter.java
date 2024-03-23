@@ -20,7 +20,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private final AuthenticationManager authenticationManager;
 
-    JwtAuthenticationFilter(AuthenticationManager authenticationManager){
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager){
         this.authenticationManager = authenticationManager;
     }
 
