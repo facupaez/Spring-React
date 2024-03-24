@@ -1,6 +1,7 @@
 package com.paez.usersapp.auth;
 
 import com.paez.usersapp.auth.filters.JwtAuthenticationFilter;
+import com.paez.usersapp.auth.filters.JwtValidationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.http.HttpMethod;
@@ -31,6 +32,7 @@ public class SpringSecurityConfig {
                         .requestMatchers("/users/**").hasRole("ADMIN")*/
                         .anyRequest().authenticated())
                 .addFilter(new JwtAuthenticationFilter(authenticationConfiguration.getAuthenticationManager()))
+                .addFilter(new JwtValidationFilter(authenticationConfiguration.getAuthenticationManager()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();

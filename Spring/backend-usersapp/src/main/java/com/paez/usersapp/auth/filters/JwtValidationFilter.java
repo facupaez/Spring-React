@@ -1,6 +1,7 @@
 package com.paez.usersapp.auth.filters;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.paez.usersapp.auth.TokenJwtConfig;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,16 +27,16 @@ public class JwtValidationFilter extends BasicAuthenticationFilter {
         super.doFilterInternal(request, response, chain);
 
         // recuperamos header authorization
-        String header = request.getHeader("Authorization");
+        String header = request.getHeader(TokenJwtConfig.HEADER_AUTHORIZATION);
 
         // se ejecuta en todos los request
-        if (header == null || !header.startsWith("Bearer ")){
+        if (header == null || !header.startsWith(TokenJwtConfig.PREFIX_TOKEN)){
             chain.doFilter(request, response);
             return;
         }
 
         // eliminamos palabra "Bearer" de la cabecera
-        String token = header.replace("Bearer ", "");
+        String token = header.replace(TokenJwtConfig.PREFIX_TOKEN, "");
         // decodificamos en bytes el token de la cabecera
         byte[] tokenDecodeBytes = Base64.getDecoder().decode(token);
         // convertimos el token a cadena String
@@ -47,11 +48,11 @@ public class JwtValidationFilter extends BasicAuthenticationFilter {
         // guardamos user
         String username = tokenArr[1];
 
-        if ("algun_token_con_frase_secreta".equals(secret)){
+        if (TokenJwtConfig.SECRET_KEY.equals(secret)){
             List<GrantedAuthority> authorities = new ArrayList<>();
             authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, authorities);
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, null, authorities);
 
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             chain.doFilter(request, response);

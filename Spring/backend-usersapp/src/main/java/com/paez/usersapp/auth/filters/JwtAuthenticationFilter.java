@@ -1,6 +1,7 @@
 package com.paez.usersapp.auth.filters;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.paez.usersapp.auth.TokenJwtConfig;
 import com.paez.usersapp.entities.User;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -56,10 +57,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String username = (( org.springframework.security.core.userdetails.User) authResult.getPrincipal())
                 .getUsername();
         // generamos token artesanal
-        String originalInput = "algun_token_con_frase_secreta." + username;
+        String originalInput = TokenJwtConfig.SECRET_KEY + username;
         String token = Base64.getEncoder().encodeToString(originalInput.getBytes());
         // creamos cabecera
-        response.addHeader("Authorization", "Bearer " + token);
+        response.addHeader(TokenJwtConfig.HEADER_AUTHORIZATION, TokenJwtConfig.PREFIX_TOKEN + token);
         // creamos un objeto que se convertirá a json
         Map<String, Object> body = new HashMap<>();
         body.put("token", token);
