@@ -1,7 +1,7 @@
 package com.paez.usersapp.auth.filters;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.paez.usersapp.auth.TokenJwtConfig;
+import static com.paez.usersapp.auth.TokenJwtConfig.*;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,31 +24,30 @@ public class JwtValidationFilter extends BasicAuthenticationFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        super.doFilterInternal(request, response, chain);
 
         // recuperamos header authorization
-        String header = request.getHeader(TokenJwtConfig.HEADER_AUTHORIZATION);
+        String header = request.getHeader(HEADER_AUTHORIZATION);
 
         // se ejecuta en todos los request
-        if (header == null || !header.startsWith(TokenJwtConfig.PREFIX_TOKEN)){
+        if (header == null || !header.startsWith(PREFIX_TOKEN)){
             chain.doFilter(request, response);
             return;
         }
 
         // eliminamos palabra "Bearer" de la cabecera
-        String token = header.replace(TokenJwtConfig.PREFIX_TOKEN, "");
+        String token = header.replace(PREFIX_TOKEN, "");
         // decodificamos en bytes el token de la cabecera
         byte[] tokenDecodeBytes = Base64.getDecoder().decode(token);
         // convertimos el token a cadena String
         String tokenDecode = new String(tokenDecodeBytes);
         // separamos el usuario del token que vienen en la cadena anterior
-        String[] tokenArr = tokenDecode.split(".");
+        String[] tokenArr = tokenDecode.split("\\.");
         // guardamos token
         String secret = tokenArr[0];
         // guardamos user
         String username = tokenArr[1];
 
-        if (TokenJwtConfig.SECRET_KEY.equals(secret)){
+        if (SECRET_KEY.equals(secret)){
             List<GrantedAuthority> authorities = new ArrayList<>();
             authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 
