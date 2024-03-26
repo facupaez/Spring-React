@@ -4,6 +4,7 @@ import com.paez.usersapp.DTO.UserRequestDTO;
 import com.paez.usersapp.entities.User;
 import com.paez.usersapp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,8 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional(readOnly = true)
@@ -31,6 +34,10 @@ public class UserServiceImpl implements UserService{
     @Override
     @Transactional
     public User save(User user) {
+        // encriptando contraseña cuando creamos usuario
+        String passwordBCrypt = passwordEncoder.encode(user.getPassword());
+        user.setPassword(passwordBCrypt);
+
         return userRepository.save(user);
     }
 
