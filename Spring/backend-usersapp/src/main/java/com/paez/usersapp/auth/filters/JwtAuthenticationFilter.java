@@ -3,6 +3,7 @@ package com.paez.usersapp.auth.filters;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.paez.usersapp.auth.TokenJwtConfig;
 import com.paez.usersapp.entities.User;
+import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,7 +14,7 @@ import org.springframework.security.core.*;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.io.IOException;
-import java.util.Base64;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,8 +58,11 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String username = (( org.springframework.security.core.userdetails.User) authResult.getPrincipal())
                 .getUsername();
         // generamos token artesanal
-        String originalInput = TokenJwtConfig.SECRET_KEY + "." + username;
-        String token = Base64.getEncoder().encodeToString(originalInput.getBytes());
+        /*String originalInput = TokenJwtConfig.SECRET_KEY + "." + username;
+        String token = Base64.getEncoder().encodeToString(originalInput.getBytes());*/
+
+        // generamos token JWT
+        String token = Jwts.builder().subject(username).signWith(TokenJwtConfig.SECRET_KEY).issuedAt(new Date()).expiration(new Date(System.currentTimeMillis() + 360000)).compact();
         // creamos cabecera
         response.addHeader(TokenJwtConfig.HEADER_AUTHORIZATION, TokenJwtConfig.PREFIX_TOKEN + token);
         // creamos un objeto que se convertirá a json

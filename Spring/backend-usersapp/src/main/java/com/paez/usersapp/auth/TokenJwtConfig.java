@@ -7,7 +7,7 @@ public class TokenJwtConfig {
 
     // key hard code
     // public final static String SECRET_KEY = "algun_token_con_frase_secreta";
-    
+
     // llave secreta JWT
     public final static Key SECRET_KEY = Jwts.SIG.HS256.key().build();
     public final static String PREFIX_TOKEN = "Bearer ";
